@@ -1,19 +1,43 @@
-import { Module } from '@nestjs/common';
-import { ResumeModule } from './resume/resume.module';
-import { TestimonialsModule } from './testimonials/testimonials.module';
-import { SkillsModule } from './skills/skills.module';
+import { Module, Logger } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
-import { ExperienceModule } from './experience/experience.module';
+import { ToolsModule } from './tools/tools.module';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
 
 @Module({
   imports: [
-    ResumeModule,
-    TestimonialsModule,
-    SkillsModule,
+    ConfigModule,
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const logger = new Logger('MongooseModule');
+        const uri = configService.databaseUrl;
+        
+        // Detailed debugging
+        logger.log(`Attempting to connect to MongoDB with URI: ${uri}`);
+        
+        return {
+          uri,
+          connectionFactory: (connection) => {
+            connection.on('connected', () => {
+              logger.log('MongoDB connection established successfully');
+            });
+            connection.on('error', (error) => {
+              logger.error(`MongoDB connection error: ${error.message}`, error.stack);
+            });
+            return connection;
+          },
+        };
+      },
+    }),
     ProjectsModule,
-    ExperienceModule,
+    ToolsModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {} 

@@ -15,7 +15,7 @@ interface SkillsProps {
   };
 }
 
-const categoryIcons = {
+const categoryIcons: { [key: string]: JSX.Element } = {
   'Backend': <FaServer className="text-2xl" />,
   'Frontend': <FaCode className="text-2xl" />,
   'Databases': <FaDatabase className="text-2xl" />,

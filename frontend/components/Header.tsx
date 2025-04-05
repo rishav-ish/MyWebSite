@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaCode, FaBars, FaTimes } from 'react-icons/fa';
+import { FaCode, FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const navItems = [
     { name: 'Home', href: '#hero' },
     { name: 'Skills', href: '#skills' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Tools', href: '#tools' },
     { name: 'Testimonials', href: '#testimonials' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -49,7 +52,7 @@ const Header: React.FC = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="hidden md:flex space-x-8"
+            className="hidden md:flex items-center space-x-8"
           >
             {navItems.map((item, index) => (
               <motion.a
@@ -62,10 +65,36 @@ const Header: React.FC = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
+            <motion.button
+              onClick={toggleDarkMode}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <FaSun className="w-5 h-5 text-yellow-500" />
+              ) : (
+                <FaMoon className="w-5 h-5 text-gray-600" />
+              )}
+            </motion.button>
           </motion.nav>
 
           {/* Mobile Navigation Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4">
+            <motion.button
+              onClick={toggleDarkMode}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <FaSun className="w-5 h-5 text-yellow-500" />
+              ) : (
+                <FaMoon className="w-5 h-5 text-gray-600" />
+              )}
+            </motion.button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-textColor focus:outline-none"

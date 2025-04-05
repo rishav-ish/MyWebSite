@@ -109,115 +109,24 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-background relative">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-primary/10 rounded-full filter blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-accent/10 rounded-full filter blur-3xl" />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Featured <span className="text-primary">Projects</span>
-          </h2>
-          <p className="max-w-2xl mx-auto text-textColor/70">
-            A selection of my recent backend and fullstack projects, showcasing my technical skills and problem-solving abilities.
-          </p>
-        </motion.div>
-
-        {/* Filter buttons */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map(category => (
-            <motion.button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category
-                  ? 'bg-primary text-white'
-                  : 'bg-cardBg text-textColor hover:bg-primary/20'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category}
-            </motion.button>
-          ))}
+    <section className="py-20 bg-gray-100">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-12">Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Project items will go here */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold">Project 1</h3>
+            <p className="mt-2">Description of Project 1.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold">Project 2</h3>
+            <p className="mt-2">Description of Project 2.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold">Project 3</h3>
+            <p className="mt-2">Description of Project 3.</p>
+          </div>
         </div>
-
-        {/* Projects grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredProjects.map(project => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              className="bg-cardBg rounded-xl overflow-hidden border border-borderColor hover:border-primary/50 transition-colors"
-            >
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                />
-              </div>
-              
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">
-                    {project.category}
-                  </span>
-                </div>
-                
-                <p className="text-textColor/70 mb-4 text-sm">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech, i) => (
-                    <span key={i} className="text-xs bg-background text-textColor/70 px-2 py-1 rounded">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex justify-between">
-                  <a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-sm text-textColor hover:text-primary transition-colors"
-                  >
-                    <FaGithub className="mr-1" />
-                    GitHub
-                  </a>
-                  
-                  {project.links.demo && (
-                    <a
-                      href={project.links.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-sm text-textColor hover:text-primary transition-colors"
-                    >
-                      <FaExternalLinkAlt className="mr-1" />
-                      Live Demo
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

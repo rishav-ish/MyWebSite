@@ -11,6 +11,7 @@ import Projects from '../components/Projects';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import Tools from '../components/Tools';
 
 // Define types for our data
 interface ResumeData {
@@ -58,10 +59,11 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
         const [resumeRes, skillsRes, testimonialsRes] = await Promise.all([
-          axios.get('http://localhost:3001/resume'),
-          axios.get('http://localhost:3001/skills/categories'),
-          axios.get('http://localhost:3001/testimonials'),
+          axios.get(`${apiUrl}/resume`),
+          axios.get(`${apiUrl}/skills/categories`),
+          axios.get(`${apiUrl}/testimonials`),
         ]);
 
         setResumeData(resumeRes.data);
@@ -112,6 +114,7 @@ export default function Home() {
         {skills && <Skills skillsByCategory={skills} />}
         <Experience />
         <Projects />
+        <Tools />
         <Testimonials testimonials={testimonials} />
         <Contact personalInfo={resumeData.personalInfo} />
       </main>

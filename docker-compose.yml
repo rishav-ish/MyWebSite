@@ -1,27 +1,14 @@
 version: '3.8'
 
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: resume_backend
+  mongodb:
+    image: mongo:latest
+    container_name: resume_mongodb
     ports:
-      - "3001:3001"
-    environment:
-      - NODE_ENV=production
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
     restart: unless-stopped
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: resume_frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://backend:3001
-    restart: unless-stopped 
+volumes:
+  mongodb_data: 
